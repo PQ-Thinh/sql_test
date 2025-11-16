@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 16, 2025 lúc 01:15 AM
+-- Thời gian đã tạo: Th10 16, 2025 lúc 03:46 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -32,14 +32,6 @@ CREATE TABLE `cache` (
   `value` mediumtext NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `cache`
---
-
-INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('laravel-cache-356a192b7913b04c54574d18c28d46e6395428ab', 'i:1;', 1762865859),
-('laravel-cache-356a192b7913b04c54574d18c28d46e6395428ab:timer', 'i:1762865859;', 1762865859);
 
 -- --------------------------------------------------------
 
@@ -74,11 +66,11 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `slug`, `description`, `icon`, `created_at`, `updated_at`) VALUES
-(1, 'Sức khỏe và thể hình', 'suc-khoe-va-the-hinh', 'Thách thức liên quan đến việc cải thiện sức khỏe và thể hình.', 'fitness-icon.png', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(2, 'Phát triển cá nhân', 'phat-trien-ca-nhan', 'Thách thức giúp phát triển kỹ năng và kiến thức cá nhân.', 'personal-development-icon.png', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(3, 'Sự nghiệp và công việc', 'su-nghiep-va-cong-viec', 'Thách thức liên quan đến sự nghiệp và công việc.', 'career-icon.png', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(4, 'Tài chính cá nhân', 'tai-chinh-ca-nhan', 'Thách thức giúp quản lý và cải thiện tài chính cá nhân.', 'finance-icon.png', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(5, 'Mối quan hệ và xã hội', 'moi-quan-he-va-xa-hoi', 'Thách thức liên quan đến việc xây dựng và duy trì mối quan hệ xã hội.', 'social-icon.png', '2025-11-03 01:43:26', '2025-11-03 01:43:26');
+(1, 'Sức khỏe và thể hình', 'suc-khoe-va-the-hinh', 'Thách thức liên quan đến việc cải thiện sức khỏe và thể hình.', 'fitness-icon.png', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(2, 'Phát triển cá nhân', 'phat-trien-ca-nhan', 'Thách thức giúp phát triển kỹ năng và kiến thức cá nhân.', 'personal-development-icon.png', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(3, 'Sự nghiệp và công việc', 'su-nghiep-va-cong-viec', 'Thách thức liên quan đến sự nghiệp và công việc.', 'career-icon.png', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(4, 'Tài chính cá nhân', 'tai-chinh-ca-nhan', 'Thách thức giúp quản lý và cải thiện tài chính cá nhân.', 'finance-icon.png', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(5, 'Mối quan hệ và xã hội', 'moi-quan-he-va-xa-hoi', 'Thách thức liên quan đến việc xây dựng và duy trì mối quan hệ xã hội.', 'social-icon.png', '2025-11-15 19:07:04', '2025-11-15 19:07:04');
 
 -- --------------------------------------------------------
 
@@ -101,6 +93,8 @@ CREATE TABLE `challenges` (
   `allow_member_invite` tinyint(1) NOT NULL DEFAULT 1,
   `ward_id` bigint(20) UNSIGNED DEFAULT NULL,
   `creator_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `need_proof` tinyint(1) NOT NULL DEFAULT 0,
+  `status` enum('active','block') NOT NULL DEFAULT 'active',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -109,11 +103,10 @@ CREATE TABLE `challenges` (
 -- Đang đổ dữ liệu cho bảng `challenges`
 --
 
-INSERT INTO `challenges` (`id`, `title`, `description`, `image`, `time_mode`, `streak_mode`, `duration_days`, `start_date`, `end_date`, `type`, `allow_request_join`, `allow_member_invite`, `ward_id`, `creator_id`, `created_at`, `updated_at`) VALUES
-(1, '10 ngày uống đủ 2 lít nước mỗi ngày', '<p>Thách thức giúp bạn hình thành thói quen uống đủ nước hàng ngày.</p>', 'challenges/challenge.png', 'rolling', 'cumulative', 10, '2025-11-03 08:43:26', '2025-11-10 08:43:26', 'public', 1, 1, 3356, 1, '2025-11-03 01:43:26', '2025-11-10 20:18:14'),
-(2, '30 ngày đọc sách mỗi ngày 20 trang', '<p>Thách thức giúp bạn phát triển thói quen đọc sách hàng ngày.</p>', 'challenges/challenge.png', 'fixed', 'continuous', 30, '2025-11-03 08:43:26', '2025-12-03 08:43:26', 'public', 1, 1, 3356, 2, '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(3, '14 ngày tập thể dục mỗi ngày 30 phút', '<p>Thách thức giúp bạn duy trì thói quen tập thể dục hàng ngày.</p>', 'challenges/challenge.png', 'rolling', 'cumulative', 14, '2025-11-03 08:43:26', '2025-11-17 08:43:26', 'public', 1, 1, 3356, 3, '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(6, 'The King of Sales in 30 day', '10 billion per day and become ddit', 'challenges/MtTHmE4s4RkLJtrT1teSW7Ce67Rw6IZN972Rpv4k.png', 'fixed', 'continuous', 30, '2025-11-11 12:57:24', '2025-12-11 12:57:24', 'public', 1, 1, NULL, 1, '2025-11-11 05:57:24', '2025-11-11 05:57:24');
+INSERT INTO `challenges` (`id`, `title`, `description`, `image`, `time_mode`, `streak_mode`, `duration_days`, `start_date`, `end_date`, `type`, `allow_request_join`, `allow_member_invite`, `ward_id`, `creator_id`, `need_proof`, `status`, `created_at`, `updated_at`) VALUES
+(1, '7 ngày uống đủ 2 lít nước mỗi ngày', '<p>Thách thức giúp bạn hình thành thói quen uống đủ nước hàng ngày.</p>', 'challenge.png', 'rolling', 'cumulative', 7, '2025-11-16 02:07:04', '2025-11-23 02:07:04', 'public', 1, 1, 3356, 1, 0, 'active', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(2, '30 ngày đọc sách mỗi ngày 20 trang', '<p>Thách thức giúp bạn phát triển thói quen đọc sách hàng ngày.</p>', 'challenge.png', 'fixed', 'continuous', 30, '2025-11-16 02:07:04', '2025-12-16 02:07:04', 'public', 1, 1, 3356, 2, 0, 'active', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(3, '14 ngày tập thể dục mỗi ngày 30 phút', '<p>Thách thức giúp bạn duy trì thói quen tập thể dục hàng ngày.</p>', 'challenge.png', 'rolling', 'cumulative', 14, '2025-11-16 02:07:04', '2025-11-30 02:07:04', 'public', 1, 1, 3356, 3, 0, 'active', '2025-11-15 19:07:04', '2025-11-15 19:07:04');
 
 -- --------------------------------------------------------
 
@@ -134,11 +127,9 @@ CREATE TABLE `challenge_categories` (
 --
 
 INSERT INTO `challenge_categories` (`id`, `challenge_id`, `category_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(2, 1, 2, '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(3, 2, 3, '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(9, 6, 2, NULL, NULL),
-(10, 6, 3, NULL, NULL);
+(1, 1, 1, '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(2, 1, 2, '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(3, 2, 3, '2025-11-15 19:07:04', '2025-11-15 19:07:04');
 
 -- --------------------------------------------------------
 
@@ -161,9 +152,9 @@ CREATE TABLE `challenge_invitations` (
 --
 
 INSERT INTO `challenge_invitations` (`id`, `challenge_id`, `inviter_id`, `invitee_id`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 2, 'pending', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(2, 2, 2, 3, 'accepted', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(3, 3, 3, 4, 'rejected', '2025-11-03 01:43:26', '2025-11-03 01:43:26');
+(1, 1, 1, 2, 'pending', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(2, 2, 2, 3, 'accepted', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(3, 3, 3, 4, 'rejected', '2025-11-15 19:07:04', '2025-11-15 19:07:04');
 
 -- --------------------------------------------------------
 
@@ -190,11 +181,9 @@ CREATE TABLE `challenge_participants` (
 --
 
 INSERT INTO `challenge_participants` (`id`, `challenge_id`, `user_id`, `progress_percent`, `streak`, `role`, `personal_start_date`, `personal_end_date`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 50, 5, 'creator', '2025-10-24 08:43:26', '2025-11-23 08:43:26', 'active', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(2, 1, 2, 30, 3, 'member', '2025-10-29 08:43:26', '2025-11-28 08:43:26', 'active', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(3, 2, 2, 70, 7, 'creator', '2025-10-19 08:43:26', '2025-11-18 08:43:26', 'active', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(6, 3, 1, 0, 0, 'member', '2025-11-10 14:44:23', NULL, 'active', '2025-11-10 07:44:23', '2025-11-10 07:44:23'),
-(8, 6, 1, 0, 0, 'member', '2025-11-11 12:57:34', NULL, 'active', '2025-11-11 05:57:34', '2025-11-11 05:57:34');
+(1, 1, 1, 50, 5, 'creator', '2025-11-06 02:07:04', '2025-12-06 02:07:04', 'active', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(2, 1, 2, 30, 3, 'member', '2025-11-11 02:07:04', '2025-12-11 02:07:04', 'active', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(3, 2, 2, 70, 7, 'creator', '2025-11-01 02:07:04', '2025-12-01 02:07:04', 'active', '2025-11-15 19:07:04', '2025-11-15 19:07:04');
 
 -- --------------------------------------------------------
 
@@ -205,7 +194,7 @@ INSERT INTO `challenge_participants` (`id`, `challenge_id`, `user_id`, `progress
 CREATE TABLE `challenge_progress` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `challenge_participant_id` bigint(20) UNSIGNED NOT NULL,
-  `date` datetime NOT NULL,
+  `date` date NOT NULL,
   `status` enum('done','missed') NOT NULL DEFAULT 'missed',
   `proof_image` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -217,9 +206,9 @@ CREATE TABLE `challenge_progress` (
 --
 
 INSERT INTO `challenge_progress` (`id`, `challenge_participant_id`, `date`, `status`, `proof_image`, `created_at`, `updated_at`) VALUES
-(1, 1, '2025-11-03 08:43:26', 'done', 'proof.jpg', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(2, 2, '2025-11-02 08:43:26', 'missed', 'proof.jpg', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(3, 1, '2025-11-01 08:43:26', 'done', 'proof.jpg', '2025-11-03 01:43:26', '2025-11-03 01:43:26');
+(1, 1, '2025-11-16', 'done', 'proof.jpg', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(2, 2, '2025-11-15', 'missed', 'proof.jpg', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(3, 1, '2025-11-14', 'done', 'proof.jpg', '2025-11-15 19:07:04', '2025-11-15 19:07:04');
 
 -- --------------------------------------------------------
 
@@ -241,11 +230,9 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id`, `user_id`, `challenge_id`, `content`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '<p>Thách thức rất hữu ích, giúp tôi duy trì thói quen uống nước đều đặn mỗi ngày!</p>', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(2, 2, 2, '<p>Tôi rất thích thách thức này, nó giúp tôi phát triển thói quen đọc sách hàng ngày.</p>', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(3, 3, 3, '<p>Thách thức tập thể dục hàng ngày thật tuyệt vời, tôi cảm thấy khỏe mạnh hơn rất nhiều!</p>', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(4, 1, 3, 'Thử thách ác thật', '2025-11-10 07:41:45', '2025-11-10 07:41:45'),
-(6, 1, 1, 'Helo', '2025-11-11 05:51:27', '2025-11-11 05:51:27');
+(1, 1, 1, '<p>Thách thức rất hữu ích, giúp tôi duy trì thói quen uống nước đều đặn mỗi ngày!</p>', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(2, 2, 2, '<p>Tôi rất thích thách thức này, nó giúp tôi phát triển thói quen đọc sách hàng ngày.</p>', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(3, 3, 3, '<p>Thách thức tập thể dục hàng ngày thật tuyệt vời, tôi cảm thấy khỏe mạnh hơn rất nhiều!</p>', '2025-11-15 19:07:04', '2025-11-15 19:07:04');
 
 -- --------------------------------------------------------
 
@@ -282,9 +269,9 @@ CREATE TABLE `followers` (
 --
 
 INSERT INTO `followers` (`id`, `follower_id`, `following_id`, `created_at`, `updated_at`) VALUES
-(1, 2, 1, '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(2, 3, 1, '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(3, 1, 2, '2025-11-03 01:43:26', '2025-11-03 01:43:26');
+(1, 2, 1, '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(2, 3, 1, '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(3, 1, 2, '2025-11-15 19:07:04', '2025-11-15 19:07:04');
 
 -- --------------------------------------------------------
 
@@ -301,8 +288,7 @@ CREATE TABLE `habits` (
   `creator_id` bigint(20) UNSIGNED DEFAULT NULL,
   `allow_request_join` tinyint(1) NOT NULL DEFAULT 0,
   `allow_member_invite` tinyint(1) NOT NULL DEFAULT 0,
-  `start_date` datetime DEFAULT NULL,
-  `end_date` datetime DEFAULT NULL,
+  `need_proof` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -311,10 +297,10 @@ CREATE TABLE `habits` (
 -- Đang đổ dữ liệu cho bảng `habits`
 --
 
-INSERT INTO `habits` (`id`, `title`, `description`, `image`, `type`, `creator_id`, `allow_request_join`, `allow_member_invite`, `start_date`, `end_date`, `created_at`, `updated_at`) VALUES
-(1, 'Đọc sách ít nhất 30 phút mỗi ngày', '<p>Phát triển thói quen đọc sách hàng ngày để nâng cao kiến thức và kỹ năng.</p>', 'habit.png', 'personal', 1, 1, 1, '2025-11-03 08:43:26', NULL, '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(2, 'Tập thể dục ít nhất 20 phút mỗi ngày', '<p>Duy trì thói quen tập thể dục hàng ngày để cải thiện sức khỏe và thể lực.</p>', 'habit.png', 'personal', 2, 1, 1, '2025-11-03 08:43:26', NULL, '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(3, 'Uống đủ 2 lít nước mỗi ngày', '</p>Hình thành thói quen uống đủ nước hàng ngày để duy trì sức khỏe tốt.</p>', 'habit.png', 'personal', 3, 1, 1, '2025-11-03 08:43:26', NULL, '2025-11-03 01:43:26', '2025-11-03 01:43:26');
+INSERT INTO `habits` (`id`, `title`, `description`, `image`, `type`, `creator_id`, `allow_request_join`, `allow_member_invite`, `need_proof`, `created_at`, `updated_at`) VALUES
+(1, 'Đọc sách ít nhất 30 phút mỗi ngày', '<p>Phát triển thói quen đọc sách hàng ngày để nâng cao kiến thức và kỹ năng.</p>', 'habit.png', 'personal', 1, 1, 1, 0, '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(2, 'Tập thể dục ít nhất 20 phút mỗi ngày', '<p>Duy trì thói quen tập thể dục hàng ngày để cải thiện sức khỏe và thể lực.</p>', 'habit.png', 'personal', 2, 1, 1, 0, '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(3, 'Uống đủ 2 lít nước mỗi ngày', '</p>Hình thành thói quen uống đủ nước hàng ngày để duy trì sức khỏe tốt.</p>', 'habit.png', 'personal', 3, 1, 1, 0, '2025-11-15 19:07:04', '2025-11-15 19:07:04');
 
 -- --------------------------------------------------------
 
@@ -337,9 +323,9 @@ CREATE TABLE `habit_invitations` (
 --
 
 INSERT INTO `habit_invitations` (`id`, `habit_id`, `inviter_id`, `invitee_id`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 2, 'pending', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(2, 2, 2, 3, 'accepted', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(3, 3, 3, 4, 'rejected', '2025-11-03 01:43:26', '2025-11-03 01:43:26');
+(1, 1, 1, 2, 'pending', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(2, 2, 2, 3, 'accepted', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(3, 3, 3, 4, 'rejected', '2025-11-15 19:07:04', '2025-11-15 19:07:04');
 
 -- --------------------------------------------------------
 
@@ -350,7 +336,7 @@ INSERT INTO `habit_invitations` (`id`, `habit_id`, `inviter_id`, `invitee_id`, `
 CREATE TABLE `habit_logs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `habit_participant_id` bigint(20) UNSIGNED NOT NULL,
-  `date` datetime NOT NULL,
+  `date` date NOT NULL,
   `status` enum('done','missed') NOT NULL DEFAULT 'missed',
   `proof_image` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -362,9 +348,9 @@ CREATE TABLE `habit_logs` (
 --
 
 INSERT INTO `habit_logs` (`id`, `habit_participant_id`, `date`, `status`, `proof_image`, `created_at`, `updated_at`) VALUES
-(1, 1, '2023-10-01 08:00:00', 'done', 'proof.jpg', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(2, 1, '2023-10-02 08:00:00', 'missed', 'proof.jpg', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(3, 2, '2023-10-01 09:00:00', 'done', 'proof.jpg', '2025-11-03 01:43:26', '2025-11-03 01:43:26');
+(1, 1, '2023-10-01', 'done', 'proof.jpg', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(2, 1, '2023-10-02', 'missed', 'proof.jpg', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(3, 2, '2023-10-01', 'done', 'proof.jpg', '2025-11-15 19:07:04', '2025-11-15 19:07:04');
 
 -- --------------------------------------------------------
 
@@ -388,9 +374,9 @@ CREATE TABLE `habit_participants` (
 --
 
 INSERT INTO `habit_participants` (`id`, `habit_id`, `user_id`, `streak`, `role`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 0, 'creator', 'active', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(2, 1, 2, 0, 'member', 'active', '2025-11-03 01:43:26', '2025-11-03 01:43:26'),
-(3, 2, 3, 0, 'creator', 'active', '2025-11-03 01:43:26', '2025-11-03 01:43:26');
+(1, 1, 1, 0, 'creator', 'active', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(2, 1, 2, 0, 'member', 'active', '2025-11-15 19:07:04', '2025-11-15 19:07:04'),
+(3, 2, 3, 0, 'creator', 'active', '2025-11-15 19:07:04', '2025-11-15 19:07:04');
 
 -- --------------------------------------------------------
 
@@ -463,8 +449,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (17, '2025_11_02_132318_create_comments_table', 1),
 (18, '2025_11_02_132347_create_followers_table', 1),
 (19, '2025_11_03_043521_create_notifications_table', 1),
-(20, '2025_11_09_133110_create_password_reset_tokens_table', 2),
-(21, '2025_11_14_073126_create_user_xp_logs_table', 2);
+(20, '2025_11_09_133110_create_password_reset_tokens_table', 1),
+(21, '2025_11_14_073126_create_user_xp_logs_table', 1);
 
 -- --------------------------------------------------------
 
@@ -571,8 +557,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('ktVrwvQUhG7HrufnOOTqATtKgOEn4YGPJNmYqmLP', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiMkQ0M1ptVTNTeU5WcmhUQUNiaHB3UWFvbkNkOE4yeHpRWGRCUXZaRCI7czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czozMjoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2NoYWxsZW5nZXMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1762865371),
-('nwA80smiKK2f8wsFD7lLtBRRszHgv3mUF7AOGdgD', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoianNBdThuWkd4R1haRFJOZDVjUjZhalpXbHMydFdtRW9kVGNOSFRuaSI7czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjk6Il9wcmV2aW91cyI7YToxOntzOjM6InVybCI7czozMjoiaHR0cDovLzEyNy4wLjAuMTo4MDAwL2NoYWxsZW5nZXMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1762865861);
+('cN3Al8iqAGYNXXxbaAeZA2D6ujHSW8Nidja4nOMn', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiWEZsZTY0MXB1c1k4RnF1RmF1QmExemtKZllNYUNWSHVMTnRhWURiMyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9jaGFsbGVuZ2VzIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9', 1763261065);
 
 -- --------------------------------------------------------
 
@@ -591,6 +576,7 @@ CREATE TABLE `users` (
   `interests` varchar(255) DEFAULT NULL,
   `ward_id` bigint(20) UNSIGNED DEFAULT NULL,
   `role` enum('user','admin') NOT NULL DEFAULT 'user',
+  `status` enum('active','banned','blocked') NOT NULL DEFAULT 'active',
   `provider` varchar(255) DEFAULT NULL,
   `provider_id` varchar(255) DEFAULT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
@@ -602,12 +588,13 @@ CREATE TABLE `users` (
 -- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `email_verified_at`, `avatar`, `bio`, `interests`, `ward_id`, `role`, `provider`, `provider_id`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'User 1', 'user1@lifequest.vn', '$2y$12$kmxsr3wLaOMY8B4ySdx.IucO.G8wyPc/S9xtaHM8f2GGQjGUGVjRO', NULL, 'default.png', 'This is bio for user 1', 'coding, reading, cycling', 3356, 'user', NULL, NULL, 'bA2Rj0nWu5cFHJ7pcDpJEOWP9HASrVCLC7d9hXROd4FLODaSt73Cptl3K95T', '2025-11-03 01:43:25', '2025-11-03 01:43:25'),
-(2, 'User 2', 'user2@lifequest.vn', '$2y$12$cpCMTixI/g6vxqAOlxEAt.aW.4g4pfEFfMSdUsTk7wlOkSpyX.7/K', NULL, 'default.png', 'This is bio for user 2', 'coding, reading, cycling', 3356, 'user', NULL, NULL, NULL, '2025-11-03 01:43:25', '2025-11-03 01:43:25'),
-(3, 'User 3', 'user3@lifequest.vn', '$2y$12$ZwbSh8.VJ264hrmc0QBKfuI3fAcVE/5.YESxhF3PS9zsaj2gDaZlS', NULL, 'default.png', 'This is bio for user 3', 'coding, reading, cycling', 3356, 'user', NULL, NULL, NULL, '2025-11-03 01:43:25', '2025-11-03 01:43:25'),
-(4, 'User 4', 'user4@lifequest.vn', '$2y$12$FX3nWbx3IL6kNrjBPekqMOhhakUcZhhR2bd6x0y0FRmBCE5HGJXZa', NULL, 'default.png', 'This is bio for user 4', 'coding, reading, cycling', 3356, 'user', NULL, NULL, NULL, '2025-11-03 01:43:25', '2025-11-03 01:43:25'),
-(5, 'User 5', 'user5@lifequest.vn', '$2y$12$L2gxGsEYTfPdjQdUeBhsT.dG4L0YcImRv49ytxM7/L6h98NGBbJye', NULL, 'default.png', 'This is bio for user 5', 'coding, reading, cycling', 3356, 'user', NULL, NULL, NULL, '2025-11-03 01:43:26', '2025-11-03 01:43:26');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `email_verified_at`, `avatar`, `bio`, `interests`, `ward_id`, `role`, `status`, `provider`, `provider_id`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'User 1', 'user1@lifequest.vn', '$2y$12$M9AjUqAoBm5dUkJZSO3FhuQPg6fU5/kkM3roGWVSLC9qOToUEwIQe', NULL, 'default.png', 'This is bio for user 1', 'coding, reading, cycling', 3356, 'user', 'active', NULL, NULL, NULL, '2025-11-15 19:07:02', '2025-11-15 19:07:02'),
+(2, 'User 2', 'user2@lifequest.vn', '$2y$12$5xqnVorAo7nPP3wQtmiI7eLYs/jmp3F3oPvDHlLkKYr8AVUuLfYeO', NULL, 'default.png', 'This is bio for user 2', 'coding, reading, cycling', 3356, 'user', 'active', NULL, NULL, NULL, '2025-11-15 19:07:03', '2025-11-15 19:07:03'),
+(3, 'User 3', 'user3@lifequest.vn', '$2y$12$MRqnRNQ77XRhD2SKNSmyju1.Z2bYbnKD8YhbvZ7BWQHHWDbv8qh7m', NULL, 'default.png', 'This is bio for user 3', 'coding, reading, cycling', 3356, 'user', 'active', NULL, NULL, NULL, '2025-11-15 19:07:03', '2025-11-15 19:07:03'),
+(4, 'User 4', 'user4@lifequest.vn', '$2y$12$cbIEBzKDKx2orRgr/YLM/uAy1r.uT65ER329CkyRXkyP/8STHuRfy', NULL, 'default.png', 'This is bio for user 4', 'coding, reading, cycling', 3356, 'user', 'active', NULL, NULL, NULL, '2025-11-15 19:07:03', '2025-11-15 19:07:03'),
+(5, 'User 5', 'user5@lifequest.vn', '$2y$12$HmiC9B0MYSz/IWG9QKlRXeXX2dOgFkeLtH/r9lViiz4x.oCtGg3Mi', NULL, 'default.png', 'This is bio for user 5', 'coding, reading, cycling', 3356, 'user', 'active', NULL, NULL, NULL, '2025-11-15 19:07:03', '2025-11-15 19:07:03'),
+(6, 'Admin', 'muonphuong.hnq2014@gmail.com', '$2y$12$gwKpUfSdAMDDZ6RQ91gate5KM4RgONWFZPwKnPW.XDeUd8QS6iWf2', NULL, 'default.png', 'This is bio for admin', 'coding, reading, cycling', 3356, 'admin', 'active', NULL, NULL, NULL, '2025-11-15 19:07:04', '2025-11-15 19:07:04');
 
 -- --------------------------------------------------------
 
@@ -4040,6 +4027,7 @@ ALTER TABLE `challenge_participants`
 --
 ALTER TABLE `challenge_progress`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `challenge_progress_date_challenge_participant_id_unique` (`date`,`challenge_participant_id`),
   ADD KEY `challenge_progress_challenge_participant_id_foreign` (`challenge_participant_id`);
 
 --
@@ -4086,6 +4074,7 @@ ALTER TABLE `habit_invitations`
 --
 ALTER TABLE `habit_logs`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `habit_logs_date_habit_participant_id_unique` (`date`,`habit_participant_id`),
   ADD KEY `habit_logs_habit_participant_id_foreign` (`habit_participant_id`);
 
 --
@@ -4178,13 +4167,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT cho bảng `challenges`
 --
 ALTER TABLE `challenges`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `challenge_categories`
 --
 ALTER TABLE `challenge_categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `challenge_invitations`
@@ -4196,7 +4185,7 @@ ALTER TABLE `challenge_invitations`
 -- AUTO_INCREMENT cho bảng `challenge_participants`
 --
 ALTER TABLE `challenge_participants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `challenge_progress`
@@ -4208,7 +4197,7 @@ ALTER TABLE `challenge_progress`
 -- AUTO_INCREMENT cho bảng `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `failed_jobs`
@@ -4268,7 +4257,7 @@ ALTER TABLE `provinces`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `user_xp_logs`
